@@ -389,6 +389,8 @@ namespace AtlasToolbox
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             var configItem = RootList.Where(item => item.Name == args.SelectedItem.ToString()).FirstOrDefault();
+            if (configItem is null) return;
+            
             string type = configItem.Type.ToString();
             if (configItem is not null)
             {
@@ -432,6 +434,9 @@ namespace AtlasToolbox
                 }
                 else
                 {
+                    // Set the item key to highlight after navigation
+                    App.SearchHighlightItemKey = configItem.Key;
+                    
                     NavigationViewControl.SelectedItem = NavigationViewControl.MenuItems
                                     .OfType<NavigationViewItem>()
                                     .First(n => n.Tag.Equals(configItem.Type.ToString()));
@@ -439,6 +444,9 @@ namespace AtlasToolbox
                     Navigate(typeof(Views.ConfigPage));
                 }
             }
+            
+            // Clear the search box after selection
+            sender.Text = string.Empty;
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

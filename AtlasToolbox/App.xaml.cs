@@ -30,6 +30,7 @@ namespace AtlasToolbox
         public static Window f_window;
         public static XamlRoot XamlRoot { get; set; }
         public static string CurrentCategory { get; set; }
+        public static string SearchHighlightItemKey { get; set; }
         private static Dictionary<string, string> StringList = new Dictionary<string, string>();
         public static List<IConfigurationItem> RootList = new List<IConfigurationItem>();
         private static Mutex _mutex = new(true, "{AtlasToolbox}");
