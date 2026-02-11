@@ -63,9 +63,9 @@ namespace AtlasToolbox.Views
             ExperimentsExpander.Header = App.GetValueFromItemList("ExperimentsCardHeader");
             ExperimentsExpander.Description = App.GetValueFromItemList("ExperimentsCardDescription");
 
-            /// Search Experiment
-            SearchExpCard.Header = App.GetValueFromItemList("SearchExperiment");
-            SearchExpCard.Description = App.GetValueFromItemList("SearchExperimentDescription");
+            ///// Search Experiment
+            //SearchExpCard.Header = App.GetValueFromItemList("SearchExperiment");
+            //SearchExpCard.Description = App.GetValueFromItemList("SearchExperimentDescription");
         }
 
         private void KeepBackground_Toggled(object sender, RoutedEventArgs e)
