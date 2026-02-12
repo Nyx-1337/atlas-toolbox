@@ -145,9 +145,9 @@
                 </DataTemplate>
             </BreadcrumbBar.ItemTemplate>
         </BreadcrumbBar>
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer x:Name="ConfigScrollViewer" Grid.Row="1">
             <StackPanel>
-                <ItemsControl ItemTemplateSelector="{StaticResource DataTemplateSelector}" ItemsSource="{Binding ConfigurationItems}" />
+                <ItemsControl x:Name="ConfigItemsControl" ItemTemplateSelector="{StaticResource DataTemplateSelector}" ItemsSource="{Binding ConfigurationItems}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

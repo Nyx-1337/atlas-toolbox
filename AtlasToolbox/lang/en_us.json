@@ -2,6 +2,8 @@
   "LangName": "English (United States)",
   "LangKey": "en_us",
 
+
+  "ToBeTranslated": "To be translated",
   "OpenShellAtlasPreset": "Open Shell AtlasOS preset",
   "InterfaceTweaksDocumentation": "Interface tweaks documentation",
   "ActivationPage": "Activation Page",
@@ -222,8 +224,8 @@
   "StaticIp": "Automatically set static IP",
   "StaticIpDescription": "Automatically configures a static IP address for your network adapter",
 
-  "HideAppBrowserControl": "Hide app browser control",
-  "HideAppBrowserControlDescription": "Hides the embedded browser control in some apps to improve privacy",
+  "HideAppBrowserControl": "App browser control",
+  "HideAppBrowserControlDescription": "Show/Hides the embedded browser control in Windows Security",
 
   "SecurityHealthTray": "Security Health button in the task bar tray",
   "SecurityHealthTrayDescription": "Show or hide the Security Health button in the task bar tray",
@@ -337,7 +339,7 @@
   "Tile_KofiDescription": "Help us continue this project!",
 
   // Menu Items & other navigation item texts
-  "SearchPlaceholder": "(WIP) Search settings...",
+  "SearchPlaceholder": "Search AtlasOS settings...",
 
   "Home": "Home",
   "Software": "Software",

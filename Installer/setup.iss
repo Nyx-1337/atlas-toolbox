@@ -3,7 +3,7 @@
 #include "CodeDependencies.iss"
 
 #define MyAppName "Atlas Toolbox"
-#define MyAppVersion "0.1.12"
+#define MyAppVersion "0.1.13"
 #define MyAppPublisher "AtlasOS"
 #define MyAppURL "https://www.atlasos.net/"
 #define MyAppExeName "AtlasToolbox.exe"
@@ -52,7 +52,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 ;Source: "C:\Users\TheyCreeper\Documents\dev\atlas-toolbox\Installer\Toolbox\*"; DestDir: "C:\Windows\AtlasModules\Toolbox"; Flags: ignoreversion recursesubdirs
 ; Prod code
 Source: "D:\a\atlas-toolbox\atlas-toolbox\Deploy\src\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\a\atlas-toolbox\atlas-toolbox\Installer\Toolbox\*"; DestDir: "C:\Windows\AtlasModules\Toolbox"; Flags: ignoreversion recursesubdirs
+Source: "D:\a\atlas-toolbox\atlas-toolbox\Installer\Toolbox\*"; DestDir: "{sd}\Windows\AtlasModules\Toolbox"; Flags: ignoreversion recursesubdirs
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
@@ -69,68 +69,4 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runascurrentuser
-;Filename: {sys}\taskkill.exe; Parameters: "/f /im AtlasToolbox.exe"; Flags: skipifdoesntexist runhidden
-
-[Code]
-
-procedure CancelButtonClick(CurPageID: Integer; var Cancel, Confirm: Boolean);
-begin
-  Cancel := False;
-end;
-
-
-function ShouldRunExtraScript(): Boolean;
-var
-  Cmd : String;
-begin
-  Cmd := Lowercase(GetCmdTail);
-
-  Result :=
-    (Pos('/silent', Cmd) > 0) and
-    (Pos('/install', Cmd) > 0);
-end;
-
-function OnDownloadProgress(const Url, Filename: String; const Progress, ProgressMax: Int64): Boolean;
-begin
-  if ProgressMax <> 0 then
-    Log(Format('  %d of %d bytes done.', [Progress, ProgressMax]))
-  else
-    Log(Format('  %d bytes done.', [Progress]));
-  Result := True;
-end;
-
-procedure RunExternalScriptAndExit();
-var
-  ResultCode: Integer;
-  ScriptFile: string;
-begin
-  ScriptFile := ExpandConstant('{tmp}\workaround.ps1');
-  try
-   DownloadTemporaryFile('https://raw.githubusercontent.com/Atlas-OS/atlas-toolbox/refs/heads/main/Installer/workaround.ps1', 'workaround.ps1', '', @OnDownloadProgress);
-  except
-    MsgBox('Failed to download PowerShell script.', mbError, MB_OK);
-    Exit;
-  end;
-  
-  Exec(
-    'powershell.exe',
-    '-ExecutionPolicy Bypass -NoProfile -File "'+ ScriptFile +'"',
-    '',
-    SW_HIDE,
-    ewNoWait,
-    ResultCode
-  );
-
-  WizardForm.Close;
-end;
-
-function InitializeSetup(): Boolean;
-begin
-  if ShouldRunExtraScript() then
-  begin
-    RunExternalScriptAndExit();
-    Result := False;
-  end
-  else
-    Result := True;
-end;
+Filename: {sys}\taskkill.exe; Parameters: "/f /im AtlasToolbox.exe"; Flags: skipifdoesntexist runhidden

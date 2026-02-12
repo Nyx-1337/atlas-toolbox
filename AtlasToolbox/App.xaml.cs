@@ -30,6 +30,7 @@ namespace AtlasToolbox
         public static Window f_window;
         public static XamlRoot XamlRoot { get; set; }
         public static string CurrentCategory { get; set; }
+        public static string SearchHighlightItemKey { get; set; }
         private static Dictionary<string, string> StringList = new Dictionary<string, string>();
         public static List<IConfigurationItem> RootList = new List<IConfigurationItem>();
         private static Mutex _mutex = new(true, "{AtlasToolbox}");
@@ -252,7 +253,7 @@ namespace AtlasToolbox
                 string toReturn = "";
                 if (!desc) toReturn = StringList.Where(item => item.Key == key).Select(item => item.Value).FirstOrDefault();
                 else toReturn = StringList.Where(item => item.Key == key + "Description").Select(item => item.Value).FirstOrDefault();
-                if (toReturn == "" && toReturn != null) return "To be translated";
+                if (toReturn == "" || toReturn == null) return StringList.Where(item => item.Key == "ToBeTranslated").Select(item => item.Value).FirstOrDefault();
                 else return toReturn;
             }
             catch
